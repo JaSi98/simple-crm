@@ -1,6 +1,6 @@
-import { Component, importProvidersFrom } from '@angular/core';
-import { doc, setDoc } from "firebase/firestore"; 
-import { Firestore, addDoc, updateDoc } from '@angular/fire/firestore';
+import { Component } from '@angular/core';
+import { doc } from "firebase/firestore"; 
+import { Firestore, updateDoc } from '@angular/fire/firestore';
 import {
   MatDialog,
   MatDialogRef,
@@ -21,7 +21,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog-edit-general-info',
+  selector: 'app-dialog-delete-user',
   standalone: true,
   imports: [
     CommonModule,
@@ -37,27 +37,16 @@ import { CommonModule } from '@angular/common';
     MatNativeDateModule,
     MatProgressBarModule
   ],
-  templateUrl: './dialog-edit-general-info.component.html',
-  styleUrl: './dialog-edit-general-info.component.scss'
+  templateUrl: './dialog-delete-user.component.html',
+  styleUrl: './dialog-delete-user.component.scss'
 })
-export class DialogEditGeneralInfoComponent {
-  constructor(private firestore: Firestore, public dialogRef: MatDialogRef<DialogEditGeneralInfoComponent> ) {
-
+export class DialogDeleteUserComponent {
+  constructor(private firestore: Firestore, public dialogRef: MatDialogRef<DialogDeleteUserComponent> ) {
   }
   user: User = new User;
-  birthDate: Date = new Date (this.user.birthDate);
   loading: boolean = false;
-  
 
-  async updateUser() {
-    this.loading = true;
-    this.user.birthDate = this.birthDate?.getTime();
-    const docRef = doc(collection(this.firestore, 'users'), this.user.id);
-    await updateDoc(docRef, this.user.getCleanJson(this.user)).catch(
-      (err) => { console.error(err); }
-    )
-    this.loading = false;
-    this.dialogRef.close();
+  deleteUser() {
+
   }
 }
-

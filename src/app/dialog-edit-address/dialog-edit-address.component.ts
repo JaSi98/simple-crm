@@ -1,6 +1,6 @@
-import { Component, importProvidersFrom } from '@angular/core';
-import { doc, setDoc } from "firebase/firestore"; 
-import { Firestore, addDoc } from '@angular/fire/firestore';
+import { Component } from '@angular/core';
+import { doc } from "firebase/firestore"; 
+import { Firestore, updateDoc } from '@angular/fire/firestore';
 import {
   MatDialog,
   MatDialogRef,
@@ -48,16 +48,13 @@ export class DialogEditAddressComponent {
   loading: boolean = false;
   
 
-  async saveUser() {
+  async updateUser() {
     this.loading = true;
-    const docRef = await addDoc(this.getUserRef(), this.user.getCleanJson(this.user)).catch (
-      (err) => { console.error(err) }
-    );
+    const docRef = doc(collection(this.firestore, 'users'), this.user.id);
+    await updateDoc(docRef, this.user.getCleanJson(this.user)).catch(
+      (err) => { console.error(err); }
+    )
     this.loading = false;
     this.dialogRef.close();
-  }
-
-  getUserRef() {
-    return collection(this.firestore, 'users');
   }
 }

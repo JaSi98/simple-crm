@@ -31,4 +31,26 @@ export class User {
             city: user.city
         }
     }
+
+    public formatDate(timestamp: number): string {
+        const date = new Date(timestamp);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    }
+
+
+    public setUserObject(user: any, id: any): User {
+        return new User({
+            id: id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            birthDate: this.formatDate(user.birthDate),
+            street: user.street,
+            zipCode: user.zipCode,
+            city: user.city
+        });
+    }
 }

@@ -36,7 +36,7 @@ export class UserComponent {
     return onSnapshot(collection(this.firestore, 'users'), (list) => {
       this.users = [];
       list.forEach(user => {
-        this.users.push(this.setUserObject(user.data(), user.id))
+        this.users.push(this.user.setUserObject(user.data(), user.id))
       });
       console.log('recieved Changes ', this.users)
     });
@@ -44,27 +44,5 @@ export class UserComponent {
 
   ngOnDestroy() {
     this.unsubUsers;
-  }
-
-  formatDate(timestamp: number): string {
-    const date = new Date(timestamp);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
-}
-
-
-  setUserObject(user: any, id: any): User {
-    return new User({
-      id: id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      birthDate: this.formatDate(user.birthDate),
-      street: user.street,
-      zipCode: user.zipCode,
-      city: user.city
-    });
   }
 }

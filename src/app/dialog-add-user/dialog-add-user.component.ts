@@ -48,7 +48,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dialog-add-user.component.scss'
 })
 export class DialogAddUserComponent {
-  constructor(private firestore: Firestore, private dialogRef: MatDialogRef<DialogAddUserComponent> ) {
+  constructor(private firestore: Firestore, public dialogRef: MatDialogRef<DialogAddUserComponent> ) {
 
   }
   user: User = new User;
@@ -63,8 +63,7 @@ export class DialogAddUserComponent {
       (err) => { console.error(err) }
     );
     this.loading = false;
-    this.dialogRef.close()
-    console.log('User written ', docRef)
+    this.dialogRef.close();
   }
 
   getUserRef() {

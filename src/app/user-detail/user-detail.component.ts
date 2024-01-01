@@ -5,18 +5,23 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user.class';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
+import { DialogEditGeneralInfoComponent } from '../dialog-edit-general-info/dialog-edit-general-info.component';
+
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule],
+  imports: [MatCardModule, MatIconModule, MatButtonModule, MatMenuModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent {
   userId: string = '';
   user: User = new User;
-  constructor(private route: ActivatedRoute, private firestore: Firestore) {
+  constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) {
 
   }
 
@@ -38,7 +43,13 @@ export class UserDetailComponent {
     }
   }
 
-  openAdressDialog() {
-    
+  editGeneralInfo() {
+    const dialog = this.dialog.open(DialogEditGeneralInfoComponent);
+    dialog.componentInstance.user = this.user;
+  }
+
+  editAddress() {
+    const dialog = this.dialog.open(DialogEditAddressComponent);
+    dialog.componentInstance.user = this.user;
   }
 }

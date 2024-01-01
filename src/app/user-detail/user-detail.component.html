@@ -10,29 +10,35 @@
 </mat-card>
 
 <mat-card class="mt-32">
-    <button mat-icon-button class="pin-right-upper-corner">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="generalInfoMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #generalInfoMenu="matMenu">
+        <button mat-menu-item (click)="editGeneralInfo()">Edit</button>
+      </mat-menu>
     <mat-card-header>
         <mat-card-title>General Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <b>Firstname: </b> {{ user.firstName }} <br>
         <b>Lastname: </b> {{ user.lastName }} <br>
-        <b>E-Mail: </b> {{ user.email }} <br>
         <b>Birth-Date: </b> {{ user.birthDate }}
     </mat-card-content>
 </mat-card>
 
 <mat-card class="mt-32">
-    <button mat-icon-button class="pin-right-upper-corner" (click)="openAdressDialog()">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="adressMenu">
+        <mat-menu #adressMenu="matMenu">
+            <button mat-menu-item (click)="editAddress();">Edit</button>
+          </mat-menu>
         <mat-icon>more_vert</mat-icon>
       </button>
     <mat-card-header>
-        <mat-card-title>Address</mat-card-title>
+        <mat-card-title>Contact</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        {{ user.street }} <br>
-        {{ user.zipCode }} {{ user.city }}
+        <b>E-Mail: </b>{{ user.email }} <br>
+        <b>Street: </b>{{ user.street }} <br>
+        <b>City: </b>{{ user.zipCode }} {{ user.city }}
     </mat-card-content>
 </mat-card>

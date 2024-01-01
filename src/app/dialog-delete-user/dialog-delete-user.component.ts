@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { doc } from "firebase/firestore"; 
-import { Firestore, updateDoc } from '@angular/fire/firestore';
+import { Firestore, deleteDoc, updateDoc } from '@angular/fire/firestore';
 import {
   MatDialog,
   MatDialogRef,
@@ -19,6 +19,7 @@ import { User } from '../../models/user.class';
 import { collection } from '@angular/fire/firestore';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-delete-user',
@@ -41,12 +42,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dialog-delete-user.component.scss'
 })
 export class DialogDeleteUserComponent {
-  constructor(private firestore: Firestore, public dialogRef: MatDialogRef<DialogDeleteUserComponent> ) {
+  constructor(private firestore: Firestore, public dialogRef: MatDialogRef<DialogDeleteUserComponent>, private router: Router) {
   }
   user: User = new User;
   loading: boolean = false;
 
-  deleteUser() {
-
+  async deleteUser() {
+    this.loading = true;
+    const docRef = doc(collection(this.firestore, 'users'), this.user.id);
+    await deleteDoc(docRef).catch(
+      (err) => { console.error(err); }
+    )
+    this.loading = false;
+    this.dialogRef.close();
+    this.router.navigate(['/user']);
   }
 }

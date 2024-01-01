@@ -38,7 +38,6 @@ export class UserComponent {
       list.forEach(user => {
         this.users.push(this.user.setUserObject(user.data(), user.id))
       });
-      console.log('recieved Changes ', this.users)
     });
   }
 
